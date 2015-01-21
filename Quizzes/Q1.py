@@ -37,8 +37,8 @@ def same_hailstone(a, b):
 
 # Question Three
 def near_golden(perimeter):
-    """Return the integer height of near-golden rectangle with PERIMETER. (Dictionaries haven't been introduced in the course yet, but this seems like the best method)"""
-    
+    """Return the integer height of near-golden rectangle with PERIMETER. 
+    (Dictionaries haven't been introduced in the course yet, but this seems like the best method)"""
     ratios = {}
     for w in range(2, perimeter):
         for h in range(2, perimeter):
