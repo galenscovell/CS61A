@@ -33,3 +33,28 @@ def has_sum(sum_val, n1, n2):
     if sum_val < min(n1, n2):
         return False
     return has_sum(sum_val - n1, n1, n2) or has_sum(sum_val - n2, n1, n2)
+
+# Alternate method for previous, utilizes helper function
+def has_sum2(sum_val, n1, n2):
+    def check(current):
+        if current == sum_val:
+            return True
+        elif current > sum_val:
+            return False
+        return check(current + n1) or check(current + n2)
+    return check(0)
+
+
+def sum_range(lower, upper):
+    """
+    Printer A prints random copies between 50 <= x <= 60
+    Printer B prints random copies between 130 <= y <= 140
+    Return True if at least LOWER and no more than UPPER printed
+    """
+    def check(min_val, max_val):
+        if lower <= min_val and max_val <= upper:
+            return True
+        elif upper < min_val:
+            return False
+        return check(min_val + 50, max_val + 60) or check(min_val + 130, max_val + 140)
+    return check(0, 0)
