@@ -16,15 +16,7 @@ def g_iter(n):
     total = 0
     results = [0, 1, 2, 3]
     for x in range(4, n + 1):
-        m1, m2, m3 = x - 1, x - 2, x - 3
-        if m3 > 3:
-            total = results[m1] + (2 * results[m2]) + (3 * results[m3])
-        elif m2 > 3:
-            total = results[m1] + (2 * results[m2]) + (3 * m3)
-        elif m1 > 3:
-            total = results[m1] + (2 * m2) + (3 * m3)
-        else:
-            total = m1 + (2 * m2) + (3 * m3)
+        total = results[x - 1] + (2 * results[x - 2]) + (3 * results[x - 3])
         results.append(total)
     return results[-1]
 
@@ -106,7 +98,6 @@ def hanoi(n, start, end):
     """
     assert 0 < start <= 3 and 0 < end <= 3 and start != end, "Bad start/end"
 
-    print(n, start, end)
     if n > 0:
         hanoi(n - 1, start, 6 - start - end)
         print('Move disk %d, rod %d -> rod %d' % (n, start, end))
