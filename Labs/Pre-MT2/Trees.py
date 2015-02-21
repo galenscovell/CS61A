@@ -32,7 +32,12 @@ def flatten(tree):
         # Flatten each branch, then aggregate them
         return sum([flatten(b) for b in tree], [])
 
-
+def apply_to_leaves(map_fn, tree):
+    """Apply map_fn to all leaves of tree, constructing another tree."""
+    if is_leaf(tree):
+        return map_fn(tree)
+    else:
+        return [apply_to_leaves(map_fn, branch) for branch in tree]
 
 
 
