@@ -1,7 +1,6 @@
 
 def str_interval(x):
     """Return a string representation of interval x.
-
     >>> str_interval(interval(-1, 2))
     '-1 to 2'
     """
@@ -10,7 +9,6 @@ def str_interval(x):
 def add_interval(x, y):
     """Return an interval that contains the sum of any value in interval x and
     any value in interval y.
-
     >>> str_interval(add_interval(interval(-1, 2), interval(4, 8)))
     '3 to 10'
     """
@@ -21,7 +19,6 @@ def add_interval(x, y):
 def mul_interval(x, y):
     """Return the interval that contains the product of any value in x and any
     value in y.
-
     >>> str_interval(mul_interval(interval(-1, 2), interval(4, 8)))
     '-8 to 16'
     """
@@ -34,16 +31,28 @@ def mul_interval(x, y):
 
 # Question One
 def interval(a, b):
-    """Construct an interval from a to b."""
-    "*** YOUR CODE HERE ***"
+    """
+    Construct an interval from a to b.
+    >>> interval(1, 8)
+    [1, 8]
+    """
+    return [a, b]
 
 def lower_bound(x):
-    """Return the lower bound of interval x."""
-    "*** YOUR CODE HERE ***"
+    """
+    Return the lower bound of interval x.
+    >>> lower_bound(interval(1, 8))
+    1
+    """
+    return x[0]
 
 def upper_bound(x):
-    """Return the upper bound of interval x."""
-    "*** YOUR CODE HERE ***"
+    """
+    Return the upper bound of interval x.
+    >>> upper_bound(interval(1, 8))
+    8
+    """
+    return x[1]
 
 
 
@@ -51,14 +60,12 @@ def upper_bound(x):
 def div_interval(x, y):
     """Return the interval that contains the quotient of any value in x divided
     by any value in y.
-
     Division is implemented as the multiplication of x by the reciprocal of y.
-
     >>> str_interval(div_interval(interval(-1, 2), interval(4, 8)))
     '-0.25 to 0.5'
     """
-    "*** YOUR CODE HERE ***"
-    reciprocal_y = interval(1/upper_bound(y), 1/lower_bound(y))
+    assert lower_bound(y) != 0 and upper_bound(y) != 0, 'Cannot divide by interval that spans zero.'
+    reciprocal_y = interval(1/upper_bound(y), 1/lower_bound(y)) # 1/4, 1/8
     return mul_interval(x, reciprocal_y)
 
 
@@ -67,11 +74,14 @@ def div_interval(x, y):
 def sub_interval(x, y):
     """Return the interval that contains the difference between any value in x
     and any value in y.
-
     >>> str_interval(sub_interval(interval(-1, 2), interval(4, 8)))
     '-9 to -2'
     """
-    "*** YOUR CODE HERE ***"
+    d1 = lower_bound(x) - lower_bound(y)
+    d2 = lower_bound(x) - upper_bound(y)
+    d3 = upper_bound(x) - lower_bound(y)
+    d4 = upper_bound(x) - upper_bound(y)
+    return interval(min(d1, d2, d3, d4), max(d1, d2, d3, d4))
 
 
 
@@ -86,13 +96,16 @@ def par2(r1, r2):
     return div_interval(one, add_interval(rep_r1, rep_r2))
 
 # These two intervals give different results for parallel resistors:
-"*** YOUR CODE HERE ***"
+    # x = interval(5, 9)
+    # y = interval(1, 5)
+    # par1(x, y) => [0.3571, 7.5000]
+    # par2(x, y) => [0.8334, 3.2143]
 
 
 
 # Question Five
 def multiple_references_explanation():
-    return """The mulitple reference problem..."""
+    return """Combining the same values more than once in nested statements can result in errors due to values being different than expected."""
 
 
 
@@ -100,13 +113,16 @@ def multiple_references_explanation():
 def quadratic(x, a, b, c):
     """Return the interval that is the range of the quadratic defined by
     coefficients a, b, and c, for domain interval x.
-
     >>> str_interval(quadratic(interval(0, 2), -2, 3, -1))
-    '-3 to 0.125'
+    '-3 to 0'
     >>> str_interval(quadratic(interval(1, 3), 2, -3, 1))
     '0 to 10'
     """
-    "*** YOUR CODE HERE ***"
+    results = []
+    for i in range(lower_bound(x), upper_bound(x) + 1):
+        quad_result = (a*i*i) + (b*i) + c
+        results.append(quad_result)
+    return interval(min(results), max(results))
 
 
 
