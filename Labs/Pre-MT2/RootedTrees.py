@@ -15,6 +15,15 @@ def root(tree):
 def branches(tree):
     return tree[1:]
 
+def leaf(value):
+    return rooted(value, [])
+
+def is_leaf(tree):
+    return type(tree) != list
+
+def is_rooted_leaf(tree):
+    return branches(tree) == []
+
 def is_rooted(tree):
     if type(tree) != list or len(tree) < 1:
         return False
@@ -23,10 +32,13 @@ def is_rooted(tree):
             return False
     return True
 
-# rooted(3, [rooted(1, []),
-#            rooted(2, [rooted(1, []),
-#                       rooted(1, [])])])
-# => [3, [1], [2, [1], [1]]]
+# >>> t = rooted(1, [leaf(2), leaf(3)])
+# >>> t
+# [1, [2], [3]]
+# >>> root(t)
+# 1
+# >>> branches(t)
+# [[2], [3]]
 
 
 def fib_tree(n):
@@ -36,3 +48,29 @@ def fib_tree(n):
         left, right = fib_tree(n - 2), fib_tree(n - 1)
         root_value = root(left) + root(right)
         return rooted(root_value, [left, right])
+
+
+
+
+def reduce(fn, s, init):
+    reduced = init
+    for x in s:
+        reduced = fn(reduced, x)
+    return reduced
+
+def apply_to_all(fn, s):
+    return [fn(x) for x in s]
+
+from operator import add, mul
+def eval_tree(tree):
+    """Evaluates expression tree with function as root."""
+    if is_leaf(tree):
+        return root(tree)
+    fn = root(tree)
+    values = branches(tree)
+    print(fn, values)
+    if fn is add:
+        start = 0
+    else:
+        start = 1
+    return reduce(fn, apply_to_all(eval_tree, values), start)

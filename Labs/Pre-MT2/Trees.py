@@ -39,6 +39,30 @@ def apply_to_leaves(map_fn, tree):
     else:
         return [apply_to_leaves(map_fn, branch) for branch in tree]
 
+def height(tree):
+    """Returns height (max depth) of tree."""
+    if is_leaf(tree):
+        return 0
+    else:
+        branch_depths = [height(branch) for branch in tree]
+        return 1 + max(branch_depths)
+
+def join(tree):
+    """Joins leaves consisting of strings into sentence."""
+    if is_leaf(tree):
+        return str(tree)
+    else:
+        sentence = ' '.join([join(branch) for branch in tree])
+        return sentence
+
+def search(tree, x):
+    """Returns minimum depth of leaf with x, False if not found."""
+    if is_leaf(tree):
+        if tree == x:
+            return True
+    else:
+        return True in [search(branch, x) for branch in tree]
+
 
 
 
@@ -61,3 +85,4 @@ def right_binarize(tree):
     return [right_binarize(b) for b in tree]
 
 pangram = [['the', 'quick', 'brown', 'fox'], ['jumps', 'over', 'a', 'lazy', 'dog']]
+crazy_depth = ['the', ['quick', ['brown', ['fox', ['jumps', ['over', ['a', ['lazy', ['dog']]]]]]]]]
