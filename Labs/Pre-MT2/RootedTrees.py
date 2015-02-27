@@ -4,7 +4,7 @@
 # Root values of sub-trees within rooted tree are called nodes
 
 
-def rooted(value, branches):
+def rooted(value, branches=[]):
     for branch in branches:
         assert is_rooted(branch)
     return [value] + list(branches)
@@ -61,16 +61,38 @@ def reduce(fn, s, init):
 def apply_to_all(fn, s):
     return [fn(x) for x in s]
 
-from operator import add, mul
-def eval_tree(tree):
-    """Evaluates expression tree with function as root."""
-    if is_leaf(tree):
-        return root(tree)
-    fn = root(tree)
-    values = branches(tree)
-    print(fn, values)
-    if fn is add:
-        start = 0
-    else:
-        start = 1
-    return reduce(fn, apply_to_all(eval_tree, values), start)
+
+
+def hailstone_tree(n, height):
+    """Generates rooted tree of hailstone sequence reaching N with HEIGHT.
+    >>> hailstone_tree(1, 0)
+    [1]
+    >>> hailstone_tree(1, 4)
+    [1, [2, [4, [8, [16]]]]]
+    >>> hailstone_tree(8, 3)
+    [8, [16, [32, [64]], [5, [10]]]]
+    """
+    if height == 0:
+        return rooted(n)
+    branches = [hailstone_tree(n * 2, height - 1)]
+    if (n - 1) % 6 == 3 and (n - 1) // 3 > 1:
+        branches += [hailstone_tree((n - 1) // 3, height - 1)]
+    return rooted(n, branches)
+
+
+def find_path(tree, x):
+    """Return path in tree to leaf with value X, None if leaf not present in tree.
+    >>> t = rooted(2, [rooted(7, [leaf(3), rooted(6, [leaf(5), leaf(11)])]), leaf(15)])
+    >>> find_path(t, 5)
+    [2, 7, 6, 5]
+    >>> find_path(t, 6)
+    [2, 7, 6]
+    >>> find_path(t, 10)
+    False
+    """
+    if root(tree) == x:
+        return [root(tree)]
+    node, trees = root(tree), branches(tree)
+    for path in [find_path(t, x) for t in trees]:
+        if path:
+            return [node] + path
