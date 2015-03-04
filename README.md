@@ -1,3 +1,6 @@
-# CS61A
+CS61A
+=====
 
-Repo for depositing all Homework, Labs/Notes, and Quizzes from CS61A. (Discussions and exams are handwritten.)
+Homework, labs/notes, and quizzes from UC Berkeley's CS61A (http://www-inst.eecs.berkeley.edu/~cs61a/fa14/). Discussions and exams were completed by hand.
+
+<blockquote>Progress: 3/4 Completed</blockquote>
