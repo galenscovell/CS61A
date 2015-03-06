@@ -4,6 +4,8 @@
 # the interface, only that they have implemented it.
 
 # Interfaces can be implemented by user-defined classes
+# Methods such as __getitem__ are polymorphic functions, a type of 
+#   generic function
 
 from math import sqrt
 class Vector:
