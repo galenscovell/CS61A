@@ -39,3 +39,19 @@ class Link:
         else:
             rest_repr = ''
         return 'Link({0}{1})'.format(self.first, rest_repr)
+
+
+def extend(s, t):
+    if s is Link.empty:
+        return t
+    else:
+        return Link(s.first, extend(s.rest, t))
+
+def keep_if(s, filter_fn):
+    if s is Link.empty:
+        return s
+    kept = keep_if(s.rest, filter_fn)
+    if filter_fn(s.first):
+        return Link(s.first, kept)
+    else:
+        return kept
