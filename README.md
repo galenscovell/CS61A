@@ -1,6 +1,6 @@
 CS61A
 =====
 
-Homework, labs/notes, and quizzes from UC Berkeley's CS61A (http://www-inst.eecs.berkeley.edu/~cs61a/fa14/). Discussions and exams were completed by hand.
+Coursework from UC Berkeley's <i>CS61A - Structure and Interpretation of Computer Programs</i> (http://www-inst.eecs.berkeley.edu/~cs61a/fa14/). Discussions and exams are completed by hand.
 
-<blockquote>Progress: 3/4 Completed</blockquote>
+<blockquote><b>Progress:</b> 3/4 Complete</blockquote>
