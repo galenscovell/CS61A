@@ -23,6 +23,29 @@ class Tree:
         return 'Tree({0}{1})'.format(self.entry, branches_repr)
 
 
+def square_tree(t):
+    """Square all elements of tree."""
+    t.entry = t.entry ** 2
+    for branch in t.branches:
+        square_tree(branch)
+
+def make_even(t):
+    """Make all elements of tree even values."""
+    if t.entry % 2 != 0:
+        t.entry += 1
+    for branch in t.branches:
+        make_even(branch)
+
+def find_path(t, value):
+    """Find path through elements in tree to value."""
+    if t.entry == value:
+        return [value]
+    for branch in t.branches:
+        path = find_path(branch, value)
+        if path:
+            return [t.entry] + path
+    return False
+
 def fib_tree(n):
     if n == 0 or n == 1:
         return Tree(n)
